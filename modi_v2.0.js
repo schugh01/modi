@@ -713,13 +713,10 @@ function so_getParents(curNode,dataContainer){
 	for(i=parents.length-1; i>0; i--){
 		li = ul.appendChild(d.createElement("li"));
 		li.appendChild(d.createTextNode(parents[i]));
-		if(parentObjRef[i].getAttribute("id")) li.appendChild(d.createTextNode(" id=\"" + parentObjRef[i].getAttribute("id") +"\""));
         if(parentObjRef[i].getAttribute("data-vr-contentbox")) li.appendChild(d.createTextNode(" data-vr-contentbox=\"" + parentObjRef[i].getAttribute("data-vr-contentbox") +"\""));
         if(parentObjRef[i].getAttribute("data-vr-zone")) li.appendChild(d.createTextNode(" data-vr-zone=\"" + parentObjRef[i].getAttribute("data-vr-zone") +"\""));
-        if(parentObjRef[i].className) li.appendChild(d.createTextNode(" class=\"" + parentObjRef[i].className + "\""));
 
-
-		li.myObj = parentObjRef[i];
+        li.myObj = parentObjRef[i];
 		li.className = "parentStructure";
 		li.onmouseover = function() {
 			this.myObj.so_prevBGColor = this.myObj.style.backgroundColor;
