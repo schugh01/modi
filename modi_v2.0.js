@@ -544,7 +544,7 @@ function so_buildDataDisplay(obj) {
 
 	// parents
 	h3 = sObj.appendChild(d.createElement("h3"));
-	h3.appendChild(d.createTextNode("parent structure"));
+	h3.appendChild(d.createTextNode("parentstructure"));
 	h3.className = pref_showParents?"h3_on":"h3_off";
 	h3.onclick = function() {
 		pref_showParents = pref_showParents?false:true;
@@ -598,36 +598,84 @@ function so_buildDataDisplay(obj) {
 
 }
 
+
 function so_getParents(curNode,dataContainer){
-	parents = new Array();
-	parentObjRef = new Array();
-	while(curNode.parentNode){
-		parents[parents.length] = curNode.tagName.toLowerCase();
-		parentObjRef[parentObjRef.length] = curNode;
-		curNode = curNode.parentNode;
-	}
+    var zone = null,
+        output = null,
+        contentbox = null;
 
-	ul = dataContainer.appendChild(d.createElement("ul"));
-	ul.setAttribute("id","parentData");
-	ul.style.display = pref_showParents?"block":"none";
+    ul = dataContainer.appendChild(d.createElement("ul"));
+    ul.setAttribute("id","parentData");
+    ul.style.display = pref_showParents?"block":"none";
 
-	for(i=parents.length-1; i>0; i--){
-		li = ul.appendChild(d.createElement("li"));
-        if(parentObjRef[i].getAttribute("data-vr-contentbox")) li.appendChild(d.createTextNode(" data-vr-contentbox=\"" + parentObjRef[i].getAttribute("data-vr-contentbox") +"\""));
-        if(parentObjRef[i].getAttribute("data-vr-zone")) li.appendChild(d.createTextNode(" data-vr-zone=\"" + parentObjRef[i].getAttribute("data-vr-zone") +"\""));
+    $(curNode).parents().each(function () {
+        zone = zone || $(this).data('vrZone');
 
-        li.myObj = parentObjRef[i];
-		li.className = "parentStructure";
-		li.onmouseover = function() {
-			this.myObj.so_prevBGColor = this.myObj.style.backgroundColor;
-			so_setObjHighlight(this.myObj);
-		}
-		li.onmouseout = function() {
-			so_unsetObjHighlight(this.myObj);
-		}
-	}
+        if ($(this).data('vrContentbox') === "") {
+            contentbox = $(this).closest('[data-vr-zone]').find('[data-vr-contentbox]').index(this) + 1;
+
+        } else if ($(this).data('vrContentbox') !== undefined && $(this).data('vrContentbox') !== "" && contentbox === null) {
+            contentbox = $(this).data('vrContentbox');
+        }
+
+        if (zone !== undefined && contentbox !== null) {
+            output = zone + '#' + contentbox;
+        } else if (zone !== undefined && contentbox === null) {
+            output = zone;
+        }
+
+        li = ul.appendChild(d.createElement("li"));
+
+        li.appendChild(d.createTextNode(output));
+
+        li.myObj = output;
+        li.className = "parentStructure";
+        li.onmouseover = function() {
+            this.myObj.so_prevBGColor = this.myObj.style.backgroundColor;
+            so_setObjHighlight(this.myObj);
+        }
+        li.onmouseout = function() {
+            so_unsetObjHighlight(this.myObj);
+        }
+
+    });
+
 
 }
+
+
+
+
+//function so_getParents(curNode,dataContainer){
+//	parents = new Array();
+//	parentObjRef = new Array();
+//	while(curNode.parentNode){
+//		parents[parents.length] = curNode.tagName.toLowerCase();
+//		parentObjRef[parentObjRef.length] = curNode;
+//		curNode = curNode.parentNode;
+//	}
+//
+//	ul = dataContainer.appendChild(d.createElement("ul"));
+//	ul.setAttribute("id","parentData");
+//	ul.style.display = pref_showParents?"block":"none";
+//
+//	for(i=parents.length-1; i>0; i--){
+//		li = ul.appendChild(d.createElement("li"));
+//        if(parentObjRef[i].getAttribute("data-vr-contentbox")) li.appendChild(d.createTextNode(" data-vr-contentbox=\"" + parentObjRef[i].getAttribute("data-vr-contentbox") +"\""));
+//        if(parentObjRef[i].getAttribute("data-vr-zone")) li.appendChild(d.createTextNode(" data-vr-zone=\"" + parentObjRef[i].getAttribute("data-vr-zone") +"\""));
+//
+//        li.myObj = parentObjRef[i];
+//		li.className = "parentStructure";
+//		li.onmouseover = function() {
+//			this.myObj.so_prevBGColor = this.myObj.style.backgroundColor;
+//			so_setObjHighlight(this.myObj);
+//		}
+//		li.onmouseout = function() {
+//			so_unsetObjHighlight(this.myObj);
+//		}
+//	}
+//
+//}
 
 
 function so_showParentObj() {
