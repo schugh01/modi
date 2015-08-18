@@ -550,59 +550,6 @@ function so_buildDataDisplay(obj) {
 	h2.id = "so_h2";
 	h2.style.backgroundImage = "url("+so_host+""+ statusImg[pref_highlights] + ")";
 
-	// attributes
-	h3 = sObj.appendChild(d.createElement("h3"));
-	h3.appendChild(d.createTextNode("attributes"));
-	h3.className = pref_showAttr?"h3_on":"h3_off";
-	h3.onclick = function() {
-		pref_showAttr = pref_showAttr?false:true;
-		this.className = pref_showAttr?"h3_on":"h3_off";
-		document.getElementById("attributeData").style.display = pref_showAttr?"block":"none";
-	}
-
-	ul = sObj.appendChild(d.createElement("ul"));
-	ul.setAttribute("id","attributeData");
-	ul.style.display = pref_showAttr?"block":"none";
-
-	attrCount = 0;
-	for(i=0;i<obj.attributes.length;i++) {
-		if(obj.attributes[i].specified) {
-			if(obj.attributes[i].value && obj.attributes[i].name.indexOf("so_")==-1) {
-				attrCount++;
-				li = ul.appendChild(d.createElement("li"));
-				val = so_wrapAttributeValue(obj.attributes[i].value);
-				li.appendChild(d.createTextNode(obj.attributes[i].name.toLowerCase() + " : " + val));
-			}
-		}
-	}
-
-	if(attrCount == 0) {
-		li = ul.appendChild(d.createElement("li"));
-		li.appendChild(d.createTextNode("None Specified."));
-	}
-
-	// dimensions
-	h3 = sObj.appendChild(d.createElement("h3"));
-	h3.appendChild(d.createTextNode("dimensions"));
-	h3.className = pref_showDim?"h3_on":"h3_off";
-	h3.onclick = function() {
-		pref_showDim = pref_showDim?false:true;
-		this.className = pref_showDim?"h3_on":"h3_off";
-		document.getElementById("dimensionData").style.display = pref_showDim?"block":"none";
-	}
-	ul = sObj.appendChild(d.createElement("ul"));
-	ul.setAttribute("id","dimensionData");
-	ul.style.display = pref_showDim?"block":"none";
-
-	li = ul.appendChild(d.createElement("li"));
-	li.appendChild(d.createTextNode("Width : " + obj.offsetWidth + "px"));
-	li = ul.appendChild(d.createElement("li"));
-	li.appendChild(d.createTextNode("Height : " + obj.offsetHeight + "px"));
-	li = ul.appendChild(d.createElement("li"));
-	li.appendChild(d.createTextNode("Top : " + so_findPosition(obj,0) + "px"));
-	li = ul.appendChild(d.createElement("li"));
-	li.appendChild(d.createTextNode("Left : " + so_findPosition(obj,1) + "px"));
-
 	// parents
 	h3 = sObj.appendChild(d.createElement("h3"));
 	h3.appendChild(d.createTextNode("parent structure"));
@@ -614,45 +561,7 @@ function so_buildDataDisplay(obj) {
 	}
 	so_getParents(obj,sObj);
 
-	// children
-	if(obj.childNodes.length) {
-		h3 = sObj.appendChild(d.createElement("h3"));
-		h3.appendChild(d.createTextNode("children"));
-		h3.className = pref_showChildren?"h3_on":"h3_off";
-		h3.onclick = function() {
-			pref_showChildren = pref_showChildren?false:true;
-			this.className = pref_showChildren?"h3_on":"h3_off";
-			document.getElementById("childData").style.display = pref_showChildren?"block":"none";
-		}
 
-		ul = sObj.appendChild(d.createElement("ul"));
-		ul.setAttribute("id","childData");
-		ul.style.display = pref_showChildren?"block":"none";
-
-		for(i=0;i<obj.childNodes.length;i++) {
-			li = ul.appendChild(d.createElement("li"));
-			if(obj.childNodes[i].nodeType == 1) {
-				li.appendChild(d.createTextNode(obj.childNodes[i].nodeName.toLowerCase()));
-				li.className = "parentStructure";
-				li.myObj = obj.childNodes[i];
-				li.onmouseover = function() {
-					pref_backgroundHighlightColor = pref_childHighlightColor;
-					this.myObj.so_prevBGColor = this.myObj.style.backgroundColor;
-					so_setObjHighlight(this.myObj);
-				}
-				li.onmouseout = function() {
-					pref_backgroundHighlightColor = oHighlightColor;
-					so_unsetObjHighlight(this.myObj);
-				}
-				if(obj.childNodes[i].getAttribute("id")) li.appendChild(d.createTextNode(" id=\"" + obj.childNodes[i].getAttribute("id") + "\""));
-				if(obj.childNodes[i].className) li.appendChild(d.createTextNode(" class=\"" + obj.childNodes[i].className + "\""));
-			} else {
-				nodes = new Array("","Element Node","Attribute Node","#text","CDATA Node","Entity Reference Node","Entity Node","Processing Instruction Node","Comment Node","Document Node","Document Fragment Node","Notation Node");
-				li.appendChild(d.createTextNode(nodes[obj.childNodes[i].nodeType]));
-				li.setAttribute("title",obj.childNodes[i].nodeValue);
-			}
-		}
-	}
 
 	// credits
 	div = sObj.appendChild(d.createElement("div"));
@@ -905,25 +814,6 @@ function so_removeWidth() {
 	} else {
 		activeObj.style.width = "auto";
 	}
-}
-
-function so_showFirstChild() {
-	if(pause)return;
-	if(!activeObj) return;
-	n = activeObj.childNodes;
-	if(!n.length)return;
-	m=null;
-	for(k=0;k<n.length;k++) {
-		if(n[k].nodeType == 1) {
-			m = n[k];
-			break;
-		}
-	}
-
-	if(!m) return;
-	so_unsetObjHighlight(activeObj);
-	activeObj = m;
-	so_buildDataDisplay(activeObj);
 }
 
 
