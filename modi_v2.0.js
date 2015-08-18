@@ -650,19 +650,19 @@ function so_showParentObj() {
 	}
 }
 
-function so_labelObj(obj) {
-	if(pause || !activeObj) return;
-	lblText = obj.tagName.toLowerCase();
-	len = so_lbl.length;
-	so_lbl[len] = d.getElementsByTagName("body")[0].appendChild(d.createElement("div"));
-	so_lbl[len].appendChild(d.createTextNode(lblText));
-	so_lbl[len].className = "modi_label";
-	so_lbl[len].style.top = so_findPosition(obj,0) + "px";
-	so_lbl[len].style.left = so_findPosition(obj,1) + "px";
-	so_lbl[len].onclick = function() {
-		this.parentNode.removeChild(this);
-	}
-}
+//function so_labelObj(obj) {
+//	if(pause || !activeObj) return;
+//	lblText = obj.tagName.toLowerCase();
+//	len = so_lbl.length;
+//	so_lbl[len] = d.getElementsByTagName("body")[0].appendChild(d.createElement("div"));
+//	so_lbl[len].appendChild(d.createTextNode(lblText));
+//	so_lbl[len].className = "modi_label";
+//	so_lbl[len].style.top = so_findPosition(obj,0) + "px";
+//	so_lbl[len].style.left = so_findPosition(obj,1) + "px";
+//	so_lbl[len].onclick = function() {
+//		this.parentNode.removeChild(this);
+//	}
+//}
 
 function so_removeObj() {
 	if(pause)return;
