@@ -624,21 +624,22 @@ function so_getParents(curNode,dataContainer){
             output = zone;
         }
 
-        li = ul.appendChild(d.createElement("li"));
-
-        li.appendChild(d.createTextNode(output));
-
-        li.myObj = output;
-        li.className = "parentStructure";
-        li.onmouseover = function() {
-            this.myObj.so_prevBGColor = this.myObj.style.backgroundColor;
-            so_setObjHighlight(this.myObj);
-        }
-        li.onmouseout = function() {
-            so_unsetObjHighlight(this.myObj);
-        }
 
     });
+    
+    li = ul.appendChild(d.createElement("li"));
+
+    li.appendChild(d.createTextNode(output));
+
+    li.myObj = output;
+    li.className = "parentStructure";
+    li.onmouseover = function() {
+        this.myObj.so_prevBGColor = this.myObj.style.backgroundColor;
+        so_setObjHighlight(this.myObj);
+    }
+    li.onmouseout = function() {
+        so_unsetObjHighlight(this.myObj);
+    }
 
 
 }
