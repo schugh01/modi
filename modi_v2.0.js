@@ -7,12 +7,12 @@
 	steve@slayeroffice.com
 
 	Thanks to Aaron Barker of zelph.com for his additions to v1.x.
-	
+
 	Should you modify/improve upon this, please let me know about it so that
 	I can update the version hosted on slayeroffice.
-	
+
 	PLEASE LEAVE THIS NOTICE IN TACT
-	
+
 TODO:
 	-- add identifiers to MODI created objects to prevent them from appearing during manual DOM walk
 	-- fix firstChild selections
@@ -82,7 +82,7 @@ function so_init() {
 	d.onkeydown = so_captureKeyDownEvent;
 	window.onscroll = so_keepModiInView;
 	so_prepInputs();
-	
+
 	all = d.getElementsByTagName("*");
 	for(i=0;i<all.length;i++) {
 		if(all[i].tagName != "HTML" && all[i].tagName != "BODY" && all[i].tagName != "!") {
@@ -96,14 +96,14 @@ function so_init() {
 	cssObj.href = so_host + "modi_v2.0.css";
 	cssObj.id = "modiCSS";
 	cssObj.xid = "modi";
-	
+
 	mObj = d.getElementsByTagName("body")[0].appendChild(d.createElement("div"));
 	mObj.id = "modiContainer";
 	mObj.xid = "modi";
 	mObj.style.visibility = pref_visible?"visible":"hidden";
 	mObj.onmouseover = function() { modiFocused = true; so_setOpacity(mObj,99); }
 	mObj.onmouseout = function() { modiFocused = false; }
-	
+
 	h2 = mObj.appendChild(d.createElement("h2"));
 	h2.appendChild(d.createTextNode("Mouse-over any element to begin."));
 	h2.id = "tmp_h2";
@@ -114,25 +114,25 @@ function so_prepInputs() {
 	txtArea = d.getElementsByTagName("textarea");
 	for(i=0;i<txtInput.length;i++) {
 		if(txtInput[i].getAttribute("type")=="text" || txtInput[i].getAttribute("type") == "") {
-			txtInput[i].onfocus = function() { 
+			txtInput[i].onfocus = function() {
 				if(pause)return;
-				pause = true; 
+				pause = true;
 				// yeah, the innerHTML is cheating. at least i'm only reading, not writing :)
 				if(d.getElementById("so_h2").innerHTML.indexOf("paused")==-1)d.getElementById("so_h2").appendChild(d.createTextNode(" [paused for input focus]"));
 			}
-			txtInput[i].onblur = function() { 
-				pause = false; 
+			txtInput[i].onblur = function() {
+				pause = false;
 			}
 		}
 	}
 	for(i=0;i<txtArea.length;i++) {
 		txtArea[i].onfocus = function() {
 			if(pause)return;
-			pause = true; 
+			pause = true;
 			if(d.getElementById("so_h2").innerHTML.indexOf("paused")==-1)d.getElementById("so_h2").appendChild(d.createTextNode(" [paused for input focus]"));
 		}
-		txtArea[i].onblur = function() { 
-			pause = false; 
+		txtArea[i].onblur = function() {
+			pause = false;
 		}
 	}
 }
@@ -143,7 +143,7 @@ function so_keepModiInView() {
 	if(mObj.offsetTop < _returnScrollDimensions(1)) {
 		mObj.style.top = _returnScrollDimensions(1)+"px";
 	}
-	
+
 	if(mObj.offsetTop+mObj.offsetHeight > winHeight + _returnScrollDimensions(1)) {
 		mObj.style.top = (_returnScrollDimensions(1) + winHeight) - mObj.offsetHeight + "px";
 	}
@@ -164,18 +164,18 @@ function so_captureMouseMoveEvent(e) {
 			return;
 		}
 	}
-		
+
 	if(activeObj == null && !modiFocused) {
 		so_setOpacity(mObj,40);
 	} else {
 		so_setOpacity(mObj,99);
 	}
-	
+
 	if(pref_freeze) {
 		so_keepModiInView();
 		return;
 	}
-	
+
 	if(d.all && !window.opera) {
 		x+=_returnScrollDimensions(0);
 		y+=_returnScrollDimensions(1);
@@ -187,9 +187,9 @@ function so_captureMouseMoveEvent(e) {
 		mObj.style.left = (x+15) + "px";
 	}
 	if(mObj.offsetLeft < 0) mObj.style.left = "0px"
-	
+
 	yOffset = _returnScrollDimensions(1);
-	
+
 	if(y-mObj.offsetHeight<=0 || (y-mObj.offsetHeight)<yOffset) {
 		mObj.style.top=(y+15)+"px";
 	} else {
@@ -199,7 +199,7 @@ function so_captureMouseMoveEvent(e) {
 }
 
 function _returnScrollDimensions(which) {
-	
+
 	if(which) {
 		if(d.body.scrollTop != 0)return d.body.scrollTop;
 		if(d.documentElement.scrollTop != 0)return d.documentElement.scrollTop;
@@ -208,15 +208,15 @@ function _returnScrollDimensions(which) {
 		if(d.documentElement.scrollLeft != 0)return d.documentElement.scrollLeft;
 	}
 	return 0;
-}	
-	
+}
+
 function so_setObjHighlight(obj) {
 	switch(pref_highlights) {
 		case 0:
 			obj.style.backgroundColor = pref_backgroundHighlightColor;
 			break;
 		case 1:
-			//activeObj.prevOutline = 
+			//activeObj.prevOutline =
 			outline = pref_outlineWidth + " solid " + pref_outlineColor;
 			obj.style.MozOutline = outline;
 			obj.style.outline = outline;
@@ -249,7 +249,7 @@ function so_unsetObjHighlight(obj) {
 
 function so_captureKeyDownEvent(e) {
 	keyCode = d.all?window.event.keyCode:e.keyCode;
-	if(d.getElementById("htmlView")){ 
+	if(d.getElementById("htmlView")){
 		 switch(keyCode) {
 		 	case 27:
 				so_closeEditWindow();
@@ -260,7 +260,7 @@ function so_captureKeyDownEvent(e) {
 		}
 		return;
 	}
-	
+
 	if(pause) {
 		if(keyCode == 80) {
 			pause=false;
@@ -384,7 +384,7 @@ function so_snapWindow(corner) {
 			mObj.style.top = y+"px";
 			break;
 		case 1:
-			
+
 			break;
 	}
 }
@@ -426,15 +426,15 @@ function so_createEditWindow(obj) {
 	}
 	editWindow = mObj.appendChild(d.createElement("div"));
 	editWindow.id = "htmlView";
-		
+
 	h3 = editWindow.appendChild(d.createElement("h3"));
-	h3.appendChild(d.createTextNode("HTML Source for " + obj.tagName.toLowerCase()));		
+	h3.appendChild(d.createTextNode("HTML Source for " + obj.tagName.toLowerCase()));
 
 	txt = editWindow.appendChild(d.createElement("textarea"));
 	txt.setAttribute("id","htmlViewText")
 	txt.value = obj.innerHTML;
 	editWindow.appendChild(d.createElement("br"));
-		
+
 	a = editWindow.appendChild(d.createElement("a"));
 	a.onclick = so_closeEditWindow;
 	a.className = "btn";
@@ -459,12 +459,12 @@ function so_applyInnerHTML(mHTML,obj) {
 	try {
 		obj.innerHTML = mHTML;
 		so_closeEditWindow();
-	
+
 		all = obj.getElementsByTagName("*");
 		for(i=0;i<all.length;i++) {
 			so_prepareObjForMODI(all[i]);
 		}
-	} catch(err) { 
+	} catch(err) {
 		alert("An error occured while applying the innerHTML of this object. The most likely culprit is that this site is serving its content as application/xhtml+xml.\nError text was:\n\n" + err.message);
 		so_closeEditWindow();
 	}
@@ -482,7 +482,7 @@ function so_prepareObjForMODI(dObj) {
 }
 
 function so_closeEditWindow() {
-	document.getElementById("modiContainer").removeChild(document.getElementById("htmlView")) 
+	document.getElementById("modiContainer").removeChild(document.getElementById("htmlView"))
 	so_unsetObjHighlight(activeObj);
 	activeObj=null;
 	pause = false;
@@ -530,7 +530,7 @@ function so_buildDataDisplay(obj) {
 	if(pause)return;
 	if(d.getElementById("tmp_h2")) mObj.removeChild(d.getElementById("tmp_h2"));
 	if(d.getElementById("sContainer")) mObj.removeChild(d.getElementById("sContainer"));
-	
+
 	if(!pref_visible) {
 		ttl = obj.tagName.toLowerCase();
 		if(obj.id) ttl+= " id=\"" + obj.id + "\"";
@@ -538,7 +538,7 @@ function so_buildDataDisplay(obj) {
 		obj.setAttribute("title",ttl);
 		return;
 	}
-	
+
 	sObj = mObj.appendChild(d.createElement("div"));
 	sObj.setAttribute("id","sContainer");
 
@@ -549,21 +549,21 @@ function so_buildDataDisplay(obj) {
 	h2.onmouseup = function() {	mDown = false; }
 	h2.id = "so_h2";
 	h2.style.backgroundImage = "url("+so_host+""+ statusImg[pref_highlights] + ")";
-	
+
 	// attributes
 	h3 = sObj.appendChild(d.createElement("h3"));
 	h3.appendChild(d.createTextNode("attributes"));
 	h3.className = pref_showAttr?"h3_on":"h3_off";
-	h3.onclick = function() { 
+	h3.onclick = function() {
 		pref_showAttr = pref_showAttr?false:true;
 		this.className = pref_showAttr?"h3_on":"h3_off";
-		document.getElementById("attributeData").style.display = pref_showAttr?"block":"none"; 
+		document.getElementById("attributeData").style.display = pref_showAttr?"block":"none";
 	}
-	
+
 	ul = sObj.appendChild(d.createElement("ul"));
 	ul.setAttribute("id","attributeData");
 	ul.style.display = pref_showAttr?"block":"none";
-	
+
 	attrCount = 0;
 	for(i=0;i<obj.attributes.length;i++) {
 		if(obj.attributes[i].specified) {
@@ -575,7 +575,7 @@ function so_buildDataDisplay(obj) {
 			}
 		}
 	}
-	
+
 	if(attrCount == 0) {
 		li = ul.appendChild(d.createElement("li"));
 		li.appendChild(d.createTextNode("None Specified."));
@@ -593,7 +593,7 @@ function so_buildDataDisplay(obj) {
 	ul = sObj.appendChild(d.createElement("ul"));
 	ul.setAttribute("id","dimensionData");
 	ul.style.display = pref_showDim?"block":"none";
-	
+
 	li = ul.appendChild(d.createElement("li"));
 	li.appendChild(d.createTextNode("Width : " + obj.offsetWidth + "px"));
 	li = ul.appendChild(d.createElement("li"));
@@ -624,11 +624,11 @@ function so_buildDataDisplay(obj) {
 			this.className = pref_showChildren?"h3_on":"h3_off";
 			document.getElementById("childData").style.display = pref_showChildren?"block":"none";
 		}
-		
+
 		ul = sObj.appendChild(d.createElement("ul"));
 		ul.setAttribute("id","childData");
 		ul.style.display = pref_showChildren?"block":"none";
-		
+
 		for(i=0;i<obj.childNodes.length;i++) {
 			li = ul.appendChild(d.createElement("li"));
 			if(obj.childNodes[i].nodeType == 1) {
@@ -653,24 +653,24 @@ function so_buildDataDisplay(obj) {
 			}
 		}
 	}
-	
+
 	// credits
 	div = sObj.appendChild(d.createElement("div"));
 	div.setAttribute("id","credits");
 	b = div.appendChild(d.createElement("b"));
 	//b.appendChild(d.createTextNode("[esc] to quit | "));
-	a = d.createElement("a"); 
+	a = d.createElement("a");
 	a.setAttribute("href","javascript:so_cleanUp();");
 	a.appendChild(d.createTextNode("[esc] to quit"));
-	b.appendChild(a); 
+	b.appendChild(a);
 	b.appendChild(d.createTextNode(" | "));
-	
+
 	a = b.appendChild(d.createElement("a"));
 	a.setAttribute("title","Help!");
 	a.setAttribute("href",so_host + "modi_help.html");
 	a.setAttribute("target","_blank");
 	a.appendChild(d.createTextNode("help documentation"));
-	
+
 	div.appendChild(d.createElement("br"));
 	div.appendChild(d.createTextNode("Mouseover DOM Inspector"));
 	div.appendChild(d.createElement("br"));
@@ -680,12 +680,12 @@ function so_buildDataDisplay(obj) {
 	div.appendChild(d.createElement("br"));
 
 	so_tagAsMODI();
-	
+
 	if(d.all && !window.opera) {
 		// make up for IE's lack of max-width support.
 		if(mObj.offsetWidth>400) mObj.style.width="400px";
 	}
-	
+
 	function so_wrapAttributeValue(attrValue) {
 		// IE has a word-break css property. no need to do anything if this is IE
 		if(d.all && !window.opera) return attrValue;
@@ -694,7 +694,7 @@ function so_buildDataDisplay(obj) {
 		for(ee=0;ee<attrValue.length;ee++) if(ee%50==0) attrValue = attrValue.substring(0,ee) + " " + attrValue.substring(ee,attrValue.length);
 		return attrValue;
 	}
-	
+
 }
 
 function so_getParents(curNode,dataContainer){
@@ -709,13 +709,16 @@ function so_getParents(curNode,dataContainer){
 	ul = dataContainer.appendChild(d.createElement("ul"));
 	ul.setAttribute("id","parentData");
 	ul.style.display = pref_showParents?"block":"none";
-	
+
 	for(i=parents.length-1; i>0; i--){
 		li = ul.appendChild(d.createElement("li"));
 		li.appendChild(d.createTextNode(parents[i]));
 		if(parentObjRef[i].getAttribute("id")) li.appendChild(d.createTextNode(" id=\"" + parentObjRef[i].getAttribute("id") +"\""));
-		if(parentObjRef[i].className) li.appendChild(d.createTextNode(" class=\"" + parentObjRef[i].className + "\""));
-		
+        if(parentObjRef[i].getAttribute("data-vr-contentbox")) li.appendChild(d.createTextNode(" data-vr-contentbox=\"" + parentObjRef[i].getAttribute("data-vr-contentbox") +"\""));
+        if(parentObjRef[i].getAttribute("data-vr-zone")) li.appendChild(d.createTextNode(" data-vr-zone=\"" + parentObjRef[i].getAttribute("data-vr-zone") +"\""));
+        if(parentObjRef[i].className) li.appendChild(d.createTextNode(" class=\"" + parentObjRef[i].className + "\""));
+
+
 		li.myObj = parentObjRef[i];
 		li.className = "parentStructure";
 		li.onmouseover = function() {
@@ -728,6 +731,43 @@ function so_getParents(curNode,dataContainer){
 	}
 
 }
+
+
+function so_getParents(curNode,dataContainer){
+    parents = new Array();
+    parentObjRef = new Array();
+    while(curNode.parentNode){
+        parents[parents.length] = curNode.tagName.toLowerCase();
+        parentObjRef[parentObjRef.length] = curNode;
+        curNode = curNode.parentNode;
+    }
+
+    ul = dataContainer.appendChild(d.createElement("ul"));
+    ul.setAttribute("id","parentData");
+    ul.style.display = pref_showParents?"block":"none";
+
+    for(i=parents.length-1; i>0; i--){
+        li = ul.appendChild(d.createElement("li"));
+        li.appendChild(d.createTextNode(parents[i]));
+        if(parentObjRef[i].getAttribute("id")) li.appendChild(d.createTextNode(" id=\"" + parentObjRef[i].getAttribute("id") +"\""));
+        if(parentObjRef[i].className) li.appendChild(d.createTextNode(" class=\"" + parentObjRef[i].className + "\""));
+
+        li.myObj = parentObjRef[i];
+        li.className = "parentStructure";
+        li.onmouseover = function() {
+            this.myObj.so_prevBGColor = this.myObj.style.backgroundColor;
+            so_setObjHighlight(this.myObj);
+        }
+        li.onmouseout = function() {
+            so_unsetObjHighlight(this.myObj);
+        }
+    }
+
+}
+
+
+
+
 
 function so_showParentObj() {
 	if(pause)return;
@@ -780,7 +820,7 @@ function so_cleanUp() {
 		all[i].style.backgroundColor = all[i].so_prevBGColor;
 		all[i].so_prevBGColor = null;
 		if(all[i].randomBGColor)all[i].randomBGColor = null;
-		all[i].setAttribute("title",all[i].so_prevTitle); 
+		all[i].setAttribute("title",all[i].so_prevTitle);
 		all[i].style.outline = "none";
 		all[i].style.MozOutline = "none";
 	}
@@ -815,7 +855,7 @@ function so_walkDOMTree() {
 	if(activeObj) so_unsetObjHighlight(activeObj);
 	if(treeIndex>=d.getElementsByTagName("*").length) treeIndex = 0;
 	if(treeIndex<0) treeIndex = d.getElementsByTagName("*").length - 1;
-	
+
 	activeObj = d.getElementsByTagName("*")[treeIndex];
 	if(d.all && !window.opera) {
 		if(activeObj.tagName == "!") {
@@ -835,10 +875,10 @@ function so_tagAsMODI() {
 	modiChildren = mObj.getElementsByTagName("*");
 	for(m=0;m<modiChildren.length;m++) modiChildren[m].xid = "modi";
 }
-	
+
 function so_findPosition(obj,pType) {
 	cur = 0;
-	if(obj.offsetParent) {		
+	if(obj.offsetParent) {
 		while(obj.offsetParent) {
 			cur+=pType?obj.offsetLeft:obj.offsetTop;
 			obj = obj.offsetParent;
@@ -858,7 +898,7 @@ function so_insertClonedObj() {
 	if(!activeObj || !clonedObj)return;
 	activeObj.appendChild(clonedObj);
 	so_prepareObjForMODI(clonedObj);
-	
+
 	c = clonedObj.getElementsByTagName("*");
 	for(i=0;i<c.length;i++) so_prepareObjForMODI(c[i]);
 }
@@ -883,7 +923,7 @@ function so_hideObject() {
 		modiHiddenObjects[modiHiddenObjects.length] = activeObj;
 		activeObj.style.visibility = "hidden"
 		activeObj = null;
-	} 
+	}
 }
 
 function so_showModiHiddenObjects() {
@@ -918,7 +958,7 @@ function so_showFirstChild() {
 			break;
 		}
 	}
-	
+
 	if(!m) return;
 	so_unsetObjHighlight(activeObj);
 	activeObj = m;
