@@ -407,14 +407,6 @@ function so_changeListState() {
  	}
 }
 
-function so_removeLables() {
-	for(i=0;i<so_lbl.length;i++) {
-		try {
-			d.getElementsByTagName("body")[0].removeChild(so_lbl[i]);
-		} catch(err) { }
-	}
-	so_lbl = new Array();
-}
 
 function so_createEditWindow(obj) {
 	if(!activeObj)return;
@@ -621,7 +613,6 @@ function so_getParents(curNode,dataContainer){
 
 	for(i=parents.length-1; i>0; i--){
 		li = ul.appendChild(d.createElement("li"));
-		li.appendChild(d.createTextNode(parents[i]));
         if(parentObjRef[i].getAttribute("data-vr-contentbox")) li.appendChild(d.createTextNode(" data-vr-contentbox=\"" + parentObjRef[i].getAttribute("data-vr-contentbox") +"\""));
         if(parentObjRef[i].getAttribute("data-vr-zone")) li.appendChild(d.createTextNode(" data-vr-zone=\"" + parentObjRef[i].getAttribute("data-vr-zone") +"\""));
 
@@ -650,19 +641,6 @@ function so_showParentObj() {
 	}
 }
 
-//function so_labelObj(obj) {
-//	if(pause || !activeObj) return;
-//	lblText = obj.tagName.toLowerCase();
-//	len = so_lbl.length;
-//	so_lbl[len] = d.getElementsByTagName("body")[0].appendChild(d.createElement("div"));
-//	so_lbl[len].appendChild(d.createTextNode(lblText));
-//	so_lbl[len].className = "modi_label";
-//	so_lbl[len].style.top = so_findPosition(obj,0) + "px";
-//	so_lbl[len].style.left = so_findPosition(obj,1) + "px";
-//	so_lbl[len].onclick = function() {
-//		this.parentNode.removeChild(this);
-//	}
-//}
 
 function so_removeObj() {
 	if(pause)return;
