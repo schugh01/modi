@@ -621,7 +621,7 @@ function so_getParents(curNode,dataContainer){
             output = zone;
         }
 
-        if(!output.startsWith("hp-")){
+        if(output != null && !output.startsWith("hp-")){
               output = 'hp-' + output;
         }
 
