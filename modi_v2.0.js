@@ -611,7 +611,12 @@ function so_getParents(curNode,dataContainer){
     $(curNode).parents().each(function () {
         zone = zone || $(this).data('vrZone');
 
-        if ($(this).data('vrContentbox') !== undefined && $(this).data('vrContentbox') !== "" && contentbox === null) {
+				if ($(this).data('vrContentbox') === "") {
+           contentbox = $(this).closest('[data-vr-zone]').find('[data-vr-contentbox]').index(this) + 1;
+
+        }
+
+				if ($(this).data('vrContentbox') !== undefined && $(this).data('vrContentbox') !== "" && contentbox === null) {
             contentbox = $(this).data('vrContentbox');
         }
 
@@ -624,7 +629,6 @@ function so_getParents(curNode,dataContainer){
         if(output !== null && !output.startsWith("hp-")){
               output = 'hp-' + output;
         }
-
 
 
     });
