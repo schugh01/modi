@@ -612,7 +612,7 @@ function so_getParents(curNode,dataContainer){
         zone = zone || $(this).data('vrZone');
 
 				if ($(this).data('vrContentbox') === "") {
-           contentbox = $(this).closest('[data-vr-zone]').find('[data-vr-contentbox]').index(this) + 1;
+           contentbox = $(this).closest('[data-vr-zone]').find('[data-vr-contentbox]').index(this);
 
         }
 
